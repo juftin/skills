@@ -1,0 +1,37 @@
+{
+  "name": "pr",
+  "version": "0.0.0",
+  "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene.",
+  "author": {
+    "name": "juftin",
+    "url": "https://github.com/juftin"
+  },
+  "homepage": "https://github.com/juftin/skills",
+  "repository": "https://github.com/juftin/skills",
+  "license": "MIT",
+  "keywords": [
+    "pr",
+    "pull-request",
+    "gitmoji",
+    "conventional-commits",
+    "git"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "PR Workflow",
+    "shortDescription": "Open and refine pull requests with gitmoji titles and structured PR bodies",
+    "longDescription": "Guides the agent through opening and refining pull requests: gitmoji title conventions, structured PR body template, responding to review feedback, and branch hygiene — following juftin's development constitution.",
+    "developerName": "juftin",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Open a PR for these changes",
+      "Update the PR with review feedback"
+    ],
+    "websiteURL": "https://github.com/juftin/skills"
+  }
+}

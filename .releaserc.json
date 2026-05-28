@@ -1,0 +1,26 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "semantic-release-gitmoji",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "VERSION=${nextRelease.version} bash scripts/bump-version.sh"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          ".claude-plugin/plugin.json",
+          ".claude-plugin/marketplace.json",
+          ".codex-plugin/plugin.json",
+          "gemini-extension.json"
+        ],
+        "message": "🔖 juftin/skills v${nextRelease.version}\n\n[skip ci]"
+      }
+    ],
+    "@semantic-release/github",
+    "semantic-release-major-tag"
+  ]
+}

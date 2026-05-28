@@ -1,0 +1,6 @@
+{
+  "name": "pr",
+  "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, and review response",
+  "version": "0.0.0",
+  "contextFileName": "GEMINI.md"
+}

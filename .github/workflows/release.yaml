@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: juftin/actions/semantic-release@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

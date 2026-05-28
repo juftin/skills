@@ -1,0 +1,20 @@
+{
+  "name": "pr",
+  "version": "0.0.0",
+  "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene.",
+  "author": {
+    "name": "juftin"
+  },
+  "homepage": "https://github.com/juftin/skills",
+  "repository": "https://github.com/juftin/skills",
+  "license": "MIT",
+  "keywords": [
+    "pr",
+    "pull-request",
+    "gitmoji",
+    "code-review",
+    "git",
+    "workflow"
+  ],
+  "skills": "./skills/"
+}
