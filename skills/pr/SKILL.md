@@ -1,6 +1,6 @@
 ---
-name: juftin:pr
-description: "Open and refine pull requests. Use when the user asks to create a PR, open a pull request, push a branch for review, respond to review feedback, update a PR, or iterate on an open PR. Covers gitmoji PR titles, body formatting with gh CLI, and review response workflow."
+name: pr
+description: "Open and refine pull requests. Use when the user asks to create a PR, open a pull request, push a branch for review, respond to review feedback, update a PR, or iterate on an open PR. Covers conventional commit and gitmoji PR titles (controlled by GITMOJI env var), body formatting with gh CLI, and review response workflow."
 allowed-tools: "Bash(gh:*), Bash(git:*), Read, Grep, Glob"
 ---
 
@@ -9,32 +9,124 @@ allowed-tools: "Bash(gh:*), Bash(git:*), Read, Grep, Glob"
 Open and refine pull requests. These instructions are derived from the author's
 global development constitution.
 
-## Gitmoji Title Convention
+## Title Convention
 
-PR titles use the Gitmoji conventional commit format:
+The `GITMOJI` environment variable controls which format to use:
+
+- **`GITMOJI=1`** → gitmoji emoji prefixes (✨, 🐛, ♻️)
+- **Unset or any other value** → conventional commit type prefixes (`feat:`, `fix:`, `chore:`)
+
+Both formats follow the same structure:
 
 ```
-<gitmoji> [scope?][:?] <summary>
+<type> [scope?][:?] <summary>
 ```
-
-| Gitmoji | Intent                         |
-| ------- | ------------------------------ |
-| ✨      | New feature                    |
-| 🐛      | Bug fix                        |
-| 💥      | Breaking change                |
-| ♻️      | Refactor                       |
-| 📝      | Documentation                  |
-| ⚡      | Performance                    |
-| 🧪      | Tests                          |
-| 🔧      | Configuration                  |
-| ⬆️      | Dependency bump                |
-| 🎉      | Initial commit / project start |
-| 🔖      | Version bump                   |
-| 📈      | Analytics                      |
-| ♿️      | Accessibility                  |
-| 🌐      | Internationalization           |
 
 If the title needs "and" in the summary, the PR is too broad — narrow the scope.
+
+### Gitmoji mode (`GITMOJI=1`)
+
+| Prefix | Intent                         |
+| ------ | ------------------------------ |
+| ✨     | New feature                    |
+| 🐛     | Bug fix                        |
+| 💥     | Breaking change                |
+| ♻️     | Refactor                       |
+| 📝     | Documentation                  |
+| ⚡     | Performance                    |
+| 🧪     | Tests                          |
+| 🔧     | Configuration                  |
+| ⬆️     | Dependency bump                |
+| 🎉     | Initial commit / project start |
+| 🔖     | Version bump                   |
+| 📈     | Analytics                      |
+| ♿️     | Accessibility                  |
+| 🌐     | Internationalization           |
+
+**Examples:**
+
+- `🎉 package-name` — initial commit
+- `✨ Add login via OAuth`
+- `🐛 Fix onClick event handler`
+- `⚡️ Lazyload home screen images`
+- `♻️ (components): Transform classes to hooks`
+- `♿️ (account): Improve modals a11y`
+- `📈 Add analytics to the dashboard`
+- `🌐 Support Japanese language`
+- `🔖 Bump version to 1.2.0`
+
+Full commit message with body:
+
+```
+⚡️ Lazyload home screen images
+
+Optimize performance by loading images only when they are
+about to enter the viewport.
+```
+
+For breaking changes, include the `BREAKING CHANGE:` footer in the body:
+
+```
+💥️ Remove support for legacy auth
+
+BREAKING CHANGE: Legacy username/password auth is no longer
+supported. Users must migrate to OAuth before upgrading.
+```
+
+### Conventional Commit mode (default)
+
+| Type       | Intent                       |
+| ---------- | ---------------------------- |
+| `feat`     | New feature                  |
+| `fix`      | Bug fix                      |
+| `refactor` | Refactor                     |
+| `docs`     | Documentation                |
+| `perf`     | Performance                  |
+| `test`     | Tests                        |
+| `chore`    | Configuration, deps, version |
+| `ci`       | CI/CD pipelines              |
+| `build`    | Build system / tooling       |
+| `style`    | Formatting (no logic change) |
+| `revert`   | Revert a prior commit        |
+
+**Examples:**
+
+- `feat: add login via OAuth`
+- `fix: resolve race condition in checkout`
+- `refactor(components): transform classes to hooks`
+- `perf: lazyload home screen images`
+- `docs: document OAuth flow`
+- `test: add checkout edge case coverage`
+- `ci: add release workflow`
+- `chore: bump version to 1.2.0`
+
+Full commit message with body:
+
+```
+feat(perf): increase parallel computations
+
+Use asynchronous thread workers to get more work done
+concurrently.
+```
+
+For breaking changes, include the `BREAKING CHANGE:` footer in the body:
+
+```
+feat: remove support for legacy auth
+
+BREAKING CHANGE: Legacy username/password auth is no longer
+supported. Users must migrate to OAuth before upgrading.
+```
+
+### Scope and Ticket Numbers
+
+When a ticketing system (Jira, Linear, GitHub Issues, etc.) is in use, put the ticket
+number as the scope:
+
+| Mode         | Example                              |
+| ------------ | ------------------------------------ |
+| Gitmoji      | `✨ (CED-123): Add login via OAuth`  |
+| Conventional | `feat(CED-123): add login via OAuth` |
 
 ## Opening a PR
 
@@ -58,7 +150,7 @@ EOF
 )"
 echo "${PR_BODY}" > "${BODY_FILE}"
 gh pr create \
-  --title "<gitmoji> [scope?]: <summary>" \
+  --title "<type> [scope?]: <summary>" \
   --body-file "${BODY_FILE}"
 ```
 
@@ -113,7 +205,7 @@ graph LR
 
 ### PR Rules
 
-- PR titles must use the gitmoji conventional commit format above
+- PR titles must use the commit format described in [Title Convention](#title-convention)
 - Never credit yourself as a Co-Author in the PR description
 - Never indicate that the PR was created by an agent unless explicitly asked
 - If the project has its own PR template, prefer that over this one
