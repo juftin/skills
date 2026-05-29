@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "pr",
+      "name": "juftin",
       "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene — derived from juftin's development constitution",
       "version": "1.0.0",
       "source": "./",

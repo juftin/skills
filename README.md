@@ -14,7 +14,7 @@ A cross-platform agent skills directory and Claude Code marketplace — compatib
 
 ```bash
 claude plugin marketplace add https://github.com/juftin/skills
-claude plugin install pr@juftin
+claude plugin install juftin@juftin
 ```
 
 Or install directly:
@@ -27,7 +27,7 @@ claude plugin install https://github.com/juftin/skills
 
 ```bash
 codex plugin marketplace add https://github.com/juftin/skills
-codex plugin install pr@juftin
+codex plugin install juftin@juftin
 ```
 
 ### Gemini CLI

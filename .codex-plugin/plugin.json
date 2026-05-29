@@ -1,5 +1,5 @@
 {
-  "name": "juftin:pr",
+  "name": "juftin",
   "version": "1.0.0",
   "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene.",
   "author": {

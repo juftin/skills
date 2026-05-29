@@ -1,5 +1,5 @@
 {
-  "name": "juftin:pr",
+  "name": "juftin",
   "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, and review response",
   "version": "1.0.0",
   "contextFileName": "GEMINI.md"
