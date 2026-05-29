@@ -1,6 +1,6 @@
 {
   "name": "juftin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene.",
   "author": {
     "name": "juftin",
