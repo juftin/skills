@@ -8,7 +8,7 @@
     {
       "name": "pr",
       "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene — derived from juftin's development constitution",
-      "version": "0.0.0",
+      "version": "1.0.0",
       "source": "./",
       "author": {
         "name": "juftin"
