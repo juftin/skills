@@ -1,6 +1,12 @@
 ---
 name: pr
-description: "Open and refine pull requests. Use when the user asks to create a PR, open a pull request, push a branch for review, respond to review feedback, update a PR, or iterate on an open PR. Covers conventional commit and gitmoji PR titles (controlled by GITMOJI env var), body formatting with gh CLI, and review response workflow."
+description: >-
+  This skill should be used when the user asks to create, open, make, submit,
+  raise, or put up a PR or pull request. Also use when the user asks to push a
+  branch for review, respond to review feedback, address PR comments, update a PR,
+  iterate on a PR, or refine a pull request. Covers conventional commit and
+  gitmoji PR titles (controlled by GITMOJI env var), body formatting with gh CLI,
+  and review response workflow.
 allowed-tools: "Bash(gh:*), Bash(git:*), Read, Grep, Glob"
 ---
 
