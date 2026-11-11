@@ -2,9 +2,14 @@
 
 Available skills:
 
-- **pr** — Open and refine pull requests: conventional commit or gitmoji
-  PR titles (controlled by `GITMOJI` env var), structured PR bodies, review
-  response, and branch hygiene. Read [skills/pr/SKILL.md](skills/pr/SKILL.md).
+- **pr** — Open and refine pull requests with Conventional Commit titles,
+  structured bodies, review response, and branch hygiene.
+  Read [skills/pr/SKILL.md](skills/pr/SKILL.md).
+- **pr-gitmoji** — Gitmoji commit messages and PR titles; uses `pr` for the
+  shared PR workflow. Read [skills/pr-gitmoji/SKILL.md](skills/pr-gitmoji/SKILL.md).
+- **python-style** — Docstrings, attribute documentation, keyword arguments,
+  and type hints when writing or reviewing Python.
+  Read [skills/python-style/SKILL.md](skills/python-style/SKILL.md).
 
 Before any task, check whether one of these skills applies. Skills are mandatory
 workflows, not suggestions — when a skill matches the user's intent, follow it.
