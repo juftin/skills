@@ -4,9 +4,11 @@ Shared [Agent Skills](https://agentskills.io/specification) for **Claude Code**,
 
 ## Skills
 
-| Skill  | Description                                                                                                                      |
-| ------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| **pr** | Open and refine pull requests — conventional commit or gitmoji titles, structured PR bodies, review response, and branch hygiene |
+| Skill            | Description                                                                                             |
+| ---------------- | ------------------------------------------------------------------------------------------------------- |
+| **pr**           | Shared PR workflow — Conventional Commit titles, structured bodies, review response, and branch hygiene |
+| **pr-gitmoji**   | Gitmoji commit messages and PR titles; uses `pr` for the shared PR workflow                             |
+| **python-style** | Python docstrings, attribute documentation, keyword arguments, and type hints                           |
 
 ## Installation
 
@@ -20,6 +22,15 @@ Run from the project where you want the skill installed:
 npx skills add juftin/skills --skill pr
 ```
 
+For Gitmoji, install both PR skills so the shared workflow is available:
+
+```bash
+npx skills add juftin/skills --skill pr pr-gitmoji
+```
+
+Install `python-style` with `--skill python-style`. The native plugins below
+include all three skills.
+
 Select your agents when prompted. Add `--global` to make the skill available across projects, or `--copy` if your system does not support symlinks. To target the three main agents explicitly:
 
 ```bash
@@ -28,7 +39,11 @@ npx skills add juftin/skills --skill pr --agent claude-code codex gemini-cli
 
 ### Prerequisites
 
-The `pr` skill requires `git`, the [GitHub CLI](https://cli.github.com/) (`gh`), shell execution, and network access for GitHub operations. Authenticate `gh` before using the skill. Tool permissions are managed by the host agent.
+The PR workflow requires `git`, the [GitHub CLI](https://cli.github.com/) (`gh`), shell execution, and network access for GitHub operations. Authenticate `gh` before using the skill. `pr-gitmoji` requires the companion `pr` skill for PR work; `python-style` has no tool dependencies. Tool permissions are managed by the host agent.
+
+Use `pr` for Conventional Commit titles and `pr-gitmoji` for Gitmoji titles.
+User and project instructions select the convention; `GITMOJI` environment
+variables are no longer used.
 
 ### Claude Code
 
@@ -39,7 +54,7 @@ claude plugin marketplace add https://github.com/juftin/skills
 claude plugin install juftin@juftin
 ```
 
-Invoke the installed skill with `/juftin:pr`. To try a local checkout without installing the marketplace:
+Invoke the installed skills with `/juftin:pr`, `/juftin:pr-gitmoji`, or `/juftin:python-style`. To try a local checkout without installing the marketplace:
 
 ```bash
 claude --plugin-dir /absolute/path/to/skills
@@ -118,6 +133,10 @@ claude plugin validate .claude-plugin/marketplace.json
 ├── CLAUDE.md -> AGENTS.md    # Claude Code repository instructions
 ├── GEMINI.md -> AGENTS.md    # Gemini CLI repository instructions
 └── skills/
-    └── pr/
-        └── SKILL.md         # The pr skill
+    ├── pr/
+    │   └── SKILL.md         # Shared PR workflow, Conventional Commit titles
+    ├── pr-gitmoji/
+    │   └── SKILL.md         # Gitmoji conventions, companion to pr
+    └── python-style/
+        └── SKILL.md         # Python style conventions
 ```

@@ -1,6 +1,6 @@
 ---
 name: pr
-description: "Open and refine pull requests. Use when the user asks to create a PR, open a pull request, push a branch for review, respond to review feedback, update a PR, or iterate on an open PR. Covers conventional commit and gitmoji PR titles (controlled by GITMOJI env var), body formatting with gh CLI, and review response workflow."
+description: "Open and refine pull requests: create a PR, push a branch for review, respond to review feedback, or update an open PR. Covers Conventional Commit titles, body formatting with gh CLI, and review workflow. Use with pr-gitmoji when Gitmoji titles are requested."
 allowed-tools: >-
   Bash(git status:*) Bash(git diff:*) Bash(git log:*) Bash(git show:*)
   Bash(git ls-files:*) Bash(git rev-parse:*) Bash(git branch --show-current)
@@ -41,69 +41,18 @@ POSIX syntax; adapt them to the host shell when necessary.
 
 ## Title Convention
 
-The `GITMOJI` environment variable controls which format to use:
-
-- **`GITMOJI=1`** → gitmoji emoji prefixes (✨, 🐛, ♻️)
-- **Unset or any other value** → conventional commit type prefixes (`feat:`, `fix:`, `chore:`)
-
-Both formats follow the same structure:
+Use Conventional Commit titles by default. If the user or project requests
+Gitmoji, load `pr-gitmoji` for the title and commit conventions and keep using
+this skill for the PR workflow. Neither skill depends on `GITMOJI` environment
+variables. Explicit user and project instructions take precedence.
 
 ```
-<type> [scope?][:?] <summary>
+<type>[(scope)]: <summary>
 ```
 
 If the title needs "and" in the summary, the PR is too broad — narrow the scope.
 
-### Gitmoji mode (`GITMOJI=1`)
-
-| Prefix | Intent                         |
-| ------ | ------------------------------ |
-| ✨     | New feature                    |
-| 🐛     | Bug fix                        |
-| 💥     | Breaking change                |
-| ♻️     | Refactor                       |
-| 📝     | Documentation                  |
-| ⚡     | Performance                    |
-| 🧪     | Tests                          |
-| 🔧     | Configuration                  |
-| ⬆️     | Dependency bump                |
-| 🎉     | Initial commit / project start |
-| 🔖     | Version bump                   |
-| 📈     | Analytics                      |
-| ♿️     | Accessibility                  |
-| 🌐     | Internationalization           |
-
-**Examples:**
-
-- `🎉 package-name` — initial commit
-- `✨ Add login via OAuth`
-- `🐛 Fix onClick event handler`
-- `⚡️ Lazyload home screen images`
-- `♻️ (components): Transform classes to hooks`
-- `♿️ (account): Improve modals a11y`
-- `📈 Add analytics to the dashboard`
-- `🌐 Support Japanese language`
-- `🔖 Bump version to 1.2.0`
-
-Full commit message with body:
-
-```
-⚡️ Lazyload home screen images
-
-Optimize performance by loading images only when they are
-about to enter the viewport.
-```
-
-For breaking changes, include the `BREAKING CHANGE:` footer in the body:
-
-```
-💥️ Remove support for legacy auth
-
-BREAKING CHANGE: Legacy username/password auth is no longer
-supported. Users must migrate to OAuth before upgrading.
-```
-
-### Conventional Commit mode (default)
+### Conventional Commits (default)
 
 | Type       | Intent                       |
 | ---------- | ---------------------------- |
@@ -151,12 +100,7 @@ supported. Users must migrate to OAuth before upgrading.
 ### Scope and Ticket Numbers
 
 When a ticketing system (Jira, Linear, GitHub Issues, etc.) is in use, put the ticket
-number as the scope:
-
-| Mode         | Example                              |
-| ------------ | ------------------------------------ |
-| Gitmoji      | `✨ (ENG-123): Add login via OAuth`  |
-| Conventional | `feat(ENG-123): add login via OAuth` |
+number as the scope: `feat(ENG-123): add login via OAuth`.
 
 ## Opening a PR
 
@@ -189,7 +133,7 @@ cat > "${BODY_FILE}" <<'EOF'
 EOF
 gh pr create \
   --base "${BASE_BRANCH}" \
-  --title "<type> [scope?]: <summary>" \
+  --title "<title using the selected convention>" \
   --body-file "${BODY_FILE}"
 ```
 
@@ -244,7 +188,7 @@ graph LR
 
 ### PR Rules
 
-- PR titles must use the commit format described in [Title Convention](#title-convention)
+- PR titles must use the selected convention described in [Title Convention](#title-convention).
 - Describe the PR's final state: what the changes achieve and why. Omit
   intermediate attempts, discarded approaches, and implementation thought processes.
 - Keep the title and description up to date whenever newly pushed code materially
@@ -257,6 +201,21 @@ graph LR
 - If the project has its own PR template, prefer that over this one
 - Never force-push to main/master
 
+### Spec Artifacts
+
+When the work has spec artifacts, link the relevant specification, plan, and
+task list in the PR body using permalinks to the full commit SHA that contains
+them, for example:
+
+```
+https://github.com/<owner>/<repo>/blob/<full-commit-sha>/docs/specs/<feature>/spec.md
+```
+
+Follow the project's spec-retention convention. If artifacts are removed from
+the final tree, reference the earlier commit containing them and keep that
+commit available when rewriting history. Use the actual artifact paths,
+including root `specs/` when that is the project's convention.
+
 ## Refining a PR
 
 ### Updating the Title and Body
@@ -266,7 +225,7 @@ Prepare the revised body in `BODY_FILE` and confirm the target PR number in
 
 ```bash
 gh pr edit "${PR_NUMBER}" \
-  --title "<type> [scope?]: <final summary>" \
+  --title "<final title using the selected convention>" \
   --body-file "${BODY_FILE}"
 gh pr view "${PR_NUMBER}" --json title,body,url
 ```
