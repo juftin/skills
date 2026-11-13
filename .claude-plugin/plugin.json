@@ -1,6 +1,6 @@
 {
   "name": "juftin",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Pull request workflows with conventional commit or gitmoji titles, Python style, Taskfile workflows, and spec-driven development.",
   "author": {
     "name": "juftin"
