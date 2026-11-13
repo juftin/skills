@@ -1,6 +1,6 @@
 ---
-name: pr
-description: "Open and refine pull requests. Use when the user asks to create a PR, open a pull request, push a branch for review, respond to review feedback, update a PR, or iterate on an open PR. Covers conventional commit and gitmoji PR titles (controlled by GITMOJI env var), body formatting with gh CLI, and review response workflow."
+name: pr-conventional
+description: "Open and refine pull requests with conventional commit titles. Use when the user asks to create a PR, open a pull request, push a branch for review, respond to review feedback, update a PR, or iterate on an open PR. Covers conventional commit PR titles, body formatting with gh CLI, and review response workflow."
 allowed-tools: >-
   Bash(git status:*) Bash(git diff:*) Bash(git log:*) Bash(git show:*)
   Bash(git ls-files:*) Bash(git rev-parse:*) Bash(git branch --show-current)
@@ -41,69 +41,13 @@ POSIX syntax; adapt them to the host shell when necessary.
 
 ## Title Convention
 
-The `GITMOJI` environment variable controls which format to use:
-
-- **`GITMOJI=1`** → gitmoji emoji prefixes (✨, 🐛, ♻️)
-- **Unset or any other value** → conventional commit type prefixes (`feat:`, `fix:`, `chore:`)
-
-Both formats follow the same structure:
+Prefix titles with a conventional commit type (`feat:`, `fix:`, `chore:`):
 
 ```
-<type> [scope?][:?] <summary>
+<type>[(scope)]: <summary>
 ```
 
 If the title needs "and" in the summary, the PR is too broad — narrow the scope.
-
-### Gitmoji mode (`GITMOJI=1`)
-
-| Prefix | Intent                         |
-| ------ | ------------------------------ |
-| ✨     | New feature                    |
-| 🐛     | Bug fix                        |
-| 💥     | Breaking change                |
-| ♻️     | Refactor                       |
-| 📝     | Documentation                  |
-| ⚡     | Performance                    |
-| 🧪     | Tests                          |
-| 🔧     | Configuration                  |
-| ⬆️     | Dependency bump                |
-| 🎉     | Initial commit / project start |
-| 🔖     | Version bump                   |
-| 📈     | Analytics                      |
-| ♿️     | Accessibility                  |
-| 🌐     | Internationalization           |
-
-**Examples:**
-
-- `🎉 package-name` — initial commit
-- `✨ Add login via OAuth`
-- `🐛 Fix onClick event handler`
-- `⚡️ Lazyload home screen images`
-- `♻️ (components): Transform classes to hooks`
-- `♿️ (account): Improve modals a11y`
-- `📈 Add analytics to the dashboard`
-- `🌐 Support Japanese language`
-- `🔖 Bump version to 1.2.0`
-
-Full commit message with body:
-
-```
-⚡️ Lazyload home screen images
-
-Optimize performance by loading images only when they are
-about to enter the viewport.
-```
-
-For breaking changes, include the `BREAKING CHANGE:` footer in the body:
-
-```
-💥️ Remove support for legacy auth
-
-BREAKING CHANGE: Legacy username/password auth is no longer
-supported. Users must migrate to OAuth before upgrading.
-```
-
-### Conventional Commit mode (default)
 
 | Type       | Intent                       |
 | ---------- | ---------------------------- |
@@ -139,10 +83,10 @@ Use asynchronous thread workers to get more work done
 concurrently.
 ```
 
-For breaking changes, include the `BREAKING CHANGE:` footer in the body:
+For breaking changes, include the `BREAKING CHANGE:` footer in the body and an exclamation mark in the title:
 
 ```
-feat: remove support for legacy auth
+feat(api)!: remove support for legacy auth
 
 BREAKING CHANGE: Legacy username/password auth is no longer
 supported. Users must migrate to OAuth before upgrading.
@@ -150,13 +94,8 @@ supported. Users must migrate to OAuth before upgrading.
 
 ### Scope and Ticket Numbers
 
-When a ticketing system (Jira, Linear, GitHub Issues, etc.) is in use, put the ticket
-number as the scope:
-
-| Mode         | Example                              |
-| ------------ | ------------------------------------ |
-| Gitmoji      | `✨ (ENG-123): Add login via OAuth`  |
-| Conventional | `feat(ENG-123): add login via OAuth` |
+When you know the ticket number (Jira, Linear, GitHub Issues, etc.) from the branch
+name, commit history, or context, put it in the scope: `feat(ENG-123): add login via OAuth`
 
 ## Opening a PR
 
@@ -189,7 +128,7 @@ cat > "${BODY_FILE}" <<'EOF'
 EOF
 gh pr create \
   --base "${BASE_BRANCH}" \
-  --title "<type> [scope?]: <summary>" \
+  --title "<type>[(scope)]: <summary>" \
   --body-file "${BODY_FILE}"
 ```
 
@@ -252,8 +191,9 @@ graph LR
 - Before creating or updating the PR body, remove hard line breaks within prose
   paragraphs so they render cleanly on GitHub. Preserve blank lines and structural
   line breaks in lists, tables, and code blocks.
-- Never credit yourself as a Co-Author in the PR description
-- Never indicate that the PR was created by an agent unless explicitly asked
+- Never credit yourself as a Co-Author in the PR description, and never indicate that
+  the PR was created by an agent, unless the user explicitly asks or the project
+  documentation requires it
 - If the project has its own PR template, prefer that over this one
 - Never force-push to main/master
 
@@ -266,7 +206,7 @@ Prepare the revised body in `BODY_FILE` and confirm the target PR number in
 
 ```bash
 gh pr edit "${PR_NUMBER}" \
-  --title "<type> [scope?]: <final summary>" \
+  --title "<type>[(scope)]: <final summary>" \
   --body-file "${BODY_FILE}"
 gh pr view "${PR_NUMBER}" --json title,body,url
 ```

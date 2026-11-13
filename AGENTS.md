@@ -2,9 +2,20 @@
 
 Available skills:
 
-- **pr** — Open and refine pull requests: conventional commit or gitmoji
-  PR titles (controlled by `GITMOJI` env var), structured PR bodies, review
-  response, and branch hygiene. Read [skills/pr/SKILL.md](skills/pr/SKILL.md).
+- **pr-conventional** — Open and refine pull requests with conventional commit
+  PR titles, structured PR bodies, review response, and branch hygiene. Read
+  [skills/pr-conventional/SKILL.md](skills/pr-conventional/SKILL.md).
+- **pr-gitmoji** — Open and refine pull requests with gitmoji PR titles,
+  structured PR bodies, review response, and branch hygiene. Read
+  [skills/pr-gitmoji/SKILL.md](skills/pr-gitmoji/SKILL.md).
+- **python-style** — Python conventions: `uv` dependency and environment
+  management, NumPy docstrings, keyword arguments, and type hints. Read
+  [skills/python-style/SKILL.md](skills/python-style/SKILL.md).
+- **spec-driven-development** — Plan non-trivial work with Spec Kit before
+  implementing it. Read
+  [skills/spec-driven-development/SKILL.md](skills/spec-driven-development/SKILL.md).
+- **taskfiles** — Run development workflows through go-task (`task`). Read
+  [skills/taskfiles/SKILL.md](skills/taskfiles/SKILL.md).
 
 Before any task, check whether one of these skills applies. Skills are mandatory
 workflows, not suggestions — when a skill matches the user's intent, follow it.

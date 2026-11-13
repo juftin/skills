@@ -1,13 +1,13 @@
 {
   "name": "juftin",
-  "description": "Personal skills marketplace — PR workflow, gitmoji conventions, and code review refinement",
+  "description": "Personal skills marketplace — PR workflows, Python style, Taskfiles, and spec-driven development",
   "owner": {
     "name": "juftin"
   },
   "plugins": [
     {
       "name": "juftin",
-      "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene — derived from juftin's development constitution",
+      "description": "Pull request workflows with conventional commit or gitmoji titles, Python style, Taskfile workflows, and spec-driven development — derived from juftin's development constitution",
       "version": "1.2.0",
       "source": "./",
       "author": {

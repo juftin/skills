@@ -1,7 +1,7 @@
 {
   "name": "juftin",
   "version": "1.2.0",
-  "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene.",
+  "description": "Pull request workflows with conventional commit or gitmoji titles, Python style, Taskfile workflows, and spec-driven development.",
   "author": {
     "name": "juftin"
   },
@@ -11,8 +11,12 @@
   "keywords": [
     "pr",
     "pull-request",
+    "conventional-commits",
     "gitmoji",
-    "code-review",
+    "python",
+    "uv",
+    "taskfile",
+    "spec-kit",
     "git",
     "workflow"
   ],

@@ -1,7 +1,7 @@
 {
   "name": "juftin",
   "version": "1.2.0",
-  "description": "Open and refine pull requests with gitmoji titles, structured PR bodies, review response, and branch hygiene.",
+  "description": "Pull request workflows with conventional commit or gitmoji titles, Python style, Taskfile workflows, and spec-driven development.",
   "author": {
     "name": "juftin",
     "url": "https://github.com/juftin"
@@ -12,15 +12,20 @@
   "keywords": [
     "pr",
     "pull-request",
-    "gitmoji",
     "conventional-commits",
-    "git"
+    "gitmoji",
+    "python",
+    "uv",
+    "taskfile",
+    "spec-kit",
+    "git",
+    "workflow"
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "PR Workflow",
-    "shortDescription": "Open and refine pull requests with gitmoji titles and structured PR bodies",
-    "longDescription": "Guides the agent through opening and refining pull requests: gitmoji title conventions, structured PR body template, responding to review feedback, and branch hygiene — following juftin's development constitution.",
+    "displayName": "juftin Skills",
+    "shortDescription": "PR workflows, Python style, Taskfiles, and spec-driven development",
+    "longDescription": "Guides the agent through juftin's development workflows: opening and refining pull requests with conventional commit or gitmoji titles, Python conventions with uv, running project workflows through go-task, and planning non-trivial work with Spec Kit — following juftin's development constitution.",
     "developerName": "juftin",
     "category": "Coding",
     "capabilities": [
@@ -30,7 +35,8 @@
     ],
     "defaultPrompt": [
       "Open a PR for these changes",
-      "Update the PR with review feedback"
+      "Update the PR with review feedback",
+      "Plan this feature with Spec Kit"
     ],
     "websiteURL": "https://github.com/juftin/skills"
   }

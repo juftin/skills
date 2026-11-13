@@ -4,9 +4,13 @@ Shared [Agent Skills](https://agentskills.io/specification) for **Claude Code**,
 
 ## Skills
 
-| Skill  | Description                                                                                                                      |
-| ------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| **pr** | Open and refine pull requests — conventional commit or gitmoji titles, structured PR bodies, review response, and branch hygiene |
+| Skill                       | Description                                                                                                       |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **pr-conventional**         | Open and refine pull requests — conventional commit titles, structured PR bodies, review response, branch hygiene |
+| **pr-gitmoji**              | Open and refine pull requests — gitmoji titles, structured PR bodies, review response, branch hygiene             |
+| **python-style**            | Python conventions — `uv` environment management, NumPy docstrings, keyword arguments, type hints                 |
+| **spec-driven-development** | Plan non-trivial features, fixes, refactors, and migrations with Spec Kit before implementing                     |
+| **taskfiles**               | Run development workflows through go-task (`task`)                                                                |
 
 ## Installation
 
@@ -14,21 +18,26 @@ Shared [Agent Skills](https://agentskills.io/specification) for **Claude Code**,
 
 The [skills CLI](https://github.com/vercel-labs/skills) installs to Claude Code, Codex, Gemini CLI, Cursor, GitHub Copilot, OpenCode, Windsurf, and other supported agents. Requires Node.js with `npx`.
 
-Run from the project where you want the skill installed:
+Run from the project where you want the skills installed. Omit `--skill` to choose from every skill:
 
 ```bash
-npx skills add juftin/skills --skill pr
+npx skills add juftin/skills --skill pr-conventional
 ```
 
 Select your agents when prompted. Add `--global` to make the skill available across projects, or `--copy` if your system does not support symlinks. To target the three main agents explicitly:
 
 ```bash
-npx skills add juftin/skills --skill pr --agent claude-code codex gemini-cli
+npx skills add juftin/skills --skill pr-conventional --agent claude-code codex gemini-cli
 ```
 
 ### Prerequisites
 
-The `pr` skill requires `git`, the [GitHub CLI](https://cli.github.com/) (`gh`), shell execution, and network access for GitHub operations. Authenticate `gh` before using the skill. Tool permissions are managed by the host agent.
+Tool permissions are managed by the host agent. Some skills expect tools on the host:
+
+- **`pr-conventional`, `pr-gitmoji`**: `git`, the [GitHub CLI](https://cli.github.com/) (`gh`), shell execution, and network access for GitHub operations. Authenticate `gh` before using the skill.
+- **`python-style`**: [`uv`](https://docs.astral.sh/uv/).
+- **`spec-driven-development`**: the `specify` CLI and `speckit` skills from [juftin/spec-kit](https://github.com/juftin/spec-kit); the skill includes install commands.
+- **`taskfiles`**: [go-task](https://taskfile.dev/).
 
 ### Claude Code
 
@@ -39,7 +48,7 @@ claude plugin marketplace add https://github.com/juftin/skills
 claude plugin install juftin@juftin
 ```
 
-Invoke the installed skill with `/juftin:pr`. To try a local checkout without installing the marketplace:
+Invoke an installed skill by name, for example `/juftin:pr-conventional`. To try a local checkout without installing the marketplace:
 
 ```bash
 claude --plugin-dir /absolute/path/to/skills
@@ -54,7 +63,7 @@ codex plugin marketplace add https://github.com/juftin/skills
 codex plugin add juftin@juftin
 ```
 
-Start a new session after installing. For direct skill installation, use the skills CLI above or copy `skills/pr/` to `~/.agents/skills/pr/`. Codex [discovers local skills](https://developers.openai.com/codex/skills) in `.agents/skills/` and supports symlinked skill folders. Ask Codex to use the `pr` skill, or select it with `$pr`.
+Start a new session after installing. For direct skill installation, use the skills CLI above or copy a skill directory such as `skills/pr-conventional/` to `~/.agents/skills/pr-conventional/`. Codex [discovers local skills](https://developers.openai.com/codex/skills) in `.agents/skills/` and supports symlinked skill folders. Ask Codex to use a skill by name, or select it with `$pr-conventional`.
 
 ### Gemini CLI
 
@@ -64,11 +73,11 @@ Install the [Gemini extension](https://geminicli.com/docs/extensions/reference/)
 gemini extensions install https://github.com/juftin/skills
 ```
 
-Restart Gemini after installing, then confirm discovery with `/skills list`. For skill-only installation, use the skills CLI above or `gemini skills link /absolute/path/to/skills/skills/pr`. Gemini also [discovers skills](https://geminicli.com/docs/cli/using-agent-skills/) in `.agents/skills/` and `.gemini/skills/`.
+Restart Gemini after installing, then confirm discovery with `/skills list`. For skill-only installation, use the skills CLI above or `gemini skills link /absolute/path/to/skills/skills/pr-conventional`. Gemini also [discovers skills](https://geminicli.com/docs/cli/using-agent-skills/) in `.agents/skills/` and `.gemini/skills/`.
 
 ### Other agents and manual installation
 
-Use the skills CLI to select your agent, or copy the entire `skills/pr/` directory into its documented skills location as `pr/`. Keep `SKILL.md` and any supporting files together. Agents without native skill discovery can be directed to read `skills/pr/SKILL.md` explicitly if they support file access and shell execution.
+Use the skills CLI to select your agent, or copy each skill directory (for example `skills/pr-conventional/`) into its documented skills location under the same name. Keep `SKILL.md` and any supporting files together. Agents without native skill discovery can be directed to read a skill's `SKILL.md` (for example `skills/pr-conventional/SKILL.md`) explicitly if they support file access and shell execution.
 
 ### Working in this repository
 
@@ -118,6 +127,9 @@ claude plugin validate .claude-plugin/marketplace.json
 ├── CLAUDE.md -> AGENTS.md    # Claude Code repository instructions
 ├── GEMINI.md -> AGENTS.md    # Gemini CLI repository instructions
 └── skills/
-    └── pr/
-        └── SKILL.md         # The pr skill
+    ├── pr-conventional/     # Each skill is a directory with a SKILL.md
+    ├── pr-gitmoji/
+    ├── python-style/
+    ├── spec-driven-development/
+    └── taskfiles/
 ```
