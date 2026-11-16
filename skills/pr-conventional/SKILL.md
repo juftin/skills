@@ -150,7 +150,13 @@ Write this to the temp file before running `gh pr create`:
 
 ## Changes
 
-[Detailed description of code changes, ideally organized by file or feature area.]
+[Explain what the underlying code changes do and how they work, organized by area or feature. Adapt the thematic breakdown table below to match the PR (e.g., Source, Tests, Docs, Config/CI) so reviewers can gauge where the diff is concentrated.]
+
+| Area   | Changes     | Summary                                              |
+| ------ | ----------- | ---------------------------------------------------- |
+| Source | +20 / -5    | [Thematic summary of source code changes]            |
+| Tests  | +300 / -0   | [Thematic summary of test coverage added or updated] |
+| Docs   | +200 / -100 | [Thematic summary of documentation changes]          |
 
 <details><summary>Code Changes</summary>
 <p>
@@ -184,8 +190,15 @@ graph LR
 ### PR Rules
 
 - PR titles must use the commit format described in [Title Convention](#title-convention)
-- Describe the PR's final state: what the changes achieve and why. Omit
-  intermediate attempts, discarded approaches, and implementation thought processes.
+- Explain the **what**, **why**, and **how** of the underlying code being changed:
+  what the changes achieve, why the work is needed, and how the implementation
+  works. Describe the PR's final state and omit intermediate attempts, discarded
+  approaches, and implementation thought processes.
+- Include a thematic change-breakdown table (as shown in the template) summarizing
+  where lines are added and removed across high-level areas (such as source code,
+  tests, docs, or config, using `git diff --numstat "${BASE_BRANCH}"...HEAD`) so
+  reviewers can see the scale and distribution of the diff without listing every
+  individual file in the table.
 - Keep the title and description up to date whenever newly pushed code materially
   changes the PR.
 - Before creating or updating the PR body, remove hard line breaks within prose
